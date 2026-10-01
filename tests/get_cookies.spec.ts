@@ -31,7 +31,7 @@ test('setCookies',async({browser})=>{
 
 })
 
-test.only('Get local storage from storage state',async({browser})=>{
+test('Get local storage from storage state',async({browser})=>{
 
     const context=await browser.newContext({storageState:'./storage-data/state.json'});
     const page=await context.newPage();
