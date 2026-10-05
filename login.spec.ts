@@ -1,4 +1,5 @@
 import {test,chromium} from '@playwright/test';
+import fs from 'fs';
 
 async function login() {
     const browser=await chromium.launch();
@@ -7,10 +8,16 @@ async function login() {
     await page.goto('https://sdetqa.vercel.app/login_app');
     await page.getByPlaceholder('Enter username').fill('admin');
     await page.getByPlaceholder('Enter password').fill('admin123');
-    await page.locator("//input[@value='localStorage']").check();
+    //await page.locator("//input[@value='localStorage']").check();
+    await page.locator("//input[@value='sessionStorage']").check();
     await page.locator("//button[@type='submit']").click();
     await context.storageState({path:'./storage-data/state.json'});
+    const sessionStorageState = await page.evaluate(()=>{
+        return sessionStorage;
+
+    });
     
+    fs.writeFileSync('./storage-data/sessionStorage.json', JSON.stringify(sessionStorageState),null,2);
 }
 
  login();
