@@ -40,3 +40,25 @@ test('Get local storage from storage state',async({browser})=>{
 
 
 });
+
+test.only("get seesion storage from session storage file",async({browser})=>{
+
+    const context=await browser.newContext();
+
+    const sessionStorageData = JSON.parse(fs.readFileSync('./storage-data/sessionStorage.json', 'utf-8'));
+
+    await context.addInitScript((storage)=>{
+
+
+   for(const key in storage){
+    sessionStorage.setItem(key,storage[key])
+
+   }
+
+    },sessionStorageData);
+
+    const page=await context.newPage();
+    await page.goto('https://sdetqa.vercel.app/login_app');
+    await expect(page.getByText(' Active session')).toBeVisible();
+
+});
