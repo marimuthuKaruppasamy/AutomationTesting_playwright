@@ -41,7 +41,7 @@ test('Get local storage from storage state',async({browser})=>{
 
 });
 
-test.only("get seesion storage from session storage file",async({browser})=>{
+test("get seesion storage from session storage file",async({browser})=>{
 
     const context=await browser.newContext();
 
